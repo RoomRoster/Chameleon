@@ -31,9 +31,12 @@
         <attr name="useErrorButton" format="boolean" />
 
         <attr name="progressDrawable" format="reference" />
+        <attr name="useProgressBackground" format="boolean" />
+        <attr name="progressBackgroundColor" format="color" />
+        <attr name="isShowContentWhenLoadingState" format="boolean" />
         <attr name="isLargeProgress" format="boolean" />
 
-        <attr name="defaultState" format="enum">
+        <attr name="defaultChameleonState" format="enum">
             <enum name="LOADING" value="1" />
             <enum name="ERROR" value="2" />
             <enum name="EMPTY" value="3" />
