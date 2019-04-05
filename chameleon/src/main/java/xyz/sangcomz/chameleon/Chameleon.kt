@@ -60,63 +60,142 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
     init {
         attrs?.let {
             val a = context?.theme?.obtainStyledAttributes(
-                    attrs,
-                    R.styleable.Chameleon,
-                    0, 0)
+                attrs,
+                R.styleable.Chameleon,
+                0, 0
+            )
 
             a?.let {
                 chameleonAttr =
-                        ChameleonAttr(
-                                emptyText = it.getString(R.styleable.Chameleon_emptyText) ?: "empty",
-                                emptyTextColor = it.getColor(R.styleable.Chameleon_emptyTextColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                emptyTextSize = it.getDimension(R.styleable.Chameleon_emptyTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                emptyTextGravity = it.getInt(R.styleable.Chameleon_emptyTextGravity, 0),
-                                emptySubText = it.getString(R.styleable.Chameleon_emptySubText) ?: "empty content",
-                                emptySubTextColor = it.getColor(R.styleable.Chameleon_emptySubTextColor, ContextCompat.getColor(context, R.color.colorSubText)),
-                                emptySubTextSize = it.getDimension(R.styleable.Chameleon_emptySubTextSize, context.resources.getDimension(R.dimen.sub_text_size)),
-                                emptySubTextGravity = it.getInt(R.styleable.Chameleon_emptySubTextGravity, 0),
-                                emptyDrawable = it.getResourceId(R.styleable.Chameleon_emptyDrawable, R.drawable.ic_chameleon_empty).getDrawable(context),
-                                emptyButtonText = it.getString(R.styleable.Chameleon_emptyButtonText) ?: "retry",
-                                emptyButtonTextColor = it.getColor(R.styleable.Chameleon_emptyButtonTextColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                emptyButtonTextSize = it.getDimension(R.styleable.Chameleon_emptyButtonTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                emptyButtonBackgroundColor = it.getColor(R.styleable.Chameleon_emptyButtonBackgroundColor, ContextCompat.getColor(context, R.color.colorSubText)),
-                                useEmptyButton = it.getBoolean(R.styleable.Chameleon_useEmptyButton, false),
-                                displayNoneState = it.getBoolean(R.styleable.Chameleon_displayNoneState, false),
-                                noneText = it.getString(R.styleable.Chameleon_noneText) ?: "",
-                                noneTextColor = it.getColor(R.styleable.Chameleon_noneText, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                noneTextSize = it.getDimension(R.styleable.Chameleon_noneTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                noneTextGravity = it.getInt(R.styleable.Chameleon_noneTextGravity, 0),
-                                noneSubText = it.getString(R.styleable.Chameleon_noneSubText) ?: "",
-                                noneSubTextColor = it.getColor(R.styleable.Chameleon_noneSubTextColor, ContextCompat.getColor(context, R.color.colorSubText)),
-                                noneSubTextSize = it.getDimension(R.styleable.Chameleon_noneSubTextSize, context.resources.getDimension(R.dimen.sub_text_size)),
-                                noneSubTextGravity = it.getInt(R.styleable.Chameleon_noneSubTextGravity, 0),
-                                noneDrawable = it.getResourceId(R.styleable.Chameleon_noneDrawable, R.drawable.ic_chameleon_empty).getDrawable(context),
-                                noneButtonText = it.getString(R.styleable.Chameleon_noneButtonText) ?: "retry",
-                                noneButtonTextColor = it.getColor(R.styleable.Chameleon_noneButtonTextColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                noneButtonTextSize = it.getDimension(R.styleable.Chameleon_noneButtonTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                noneButtonBackgroundColor = it.getColor(R.styleable.Chameleon_noneButtonBackgroundColor, ContextCompat.getColor(context, R.color.colorSubText)),
-                                useNoneButton = it.getBoolean(R.styleable.Chameleon_useEmptyButton, false),
-                                errorText = it.getString(R.styleable.Chameleon_errorText) ?: "error",
-                                errorTextColor = it.getColor(R.styleable.Chameleon_errorTextColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                errorTextSize = it.getDimension(R.styleable.Chameleon_errorTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                errorTextGravity = it.getInt(R.styleable.Chameleon_errorTextGravity, 0),
-                                errorSubText = it.getString(R.styleable.Chameleon_errorSubText) ?: "error content",
-                                errorSubTextColor = it.getColor(R.styleable.Chameleon_errorSubTextColor, ContextCompat.getColor(context, R.color.colorSubText)),
-                                errorSubTextSize = it.getDimension(R.styleable.Chameleon_errorSubTextSize, context.resources.getDimension(R.dimen.sub_text_size)),
-                                errorSubTextGravity = it.getInt(R.styleable.Chameleon_errorSubTextGravity, 0),
-                                errorDrawable = it.getResourceId(R.styleable.Chameleon_errorDrawable, R.drawable.ic_chameleon_error).getDrawable(context),
-                                errorButtonText = it.getString(R.styleable.Chameleon_errorButtonText) ?: "retry",
-                                errorButtonTextColor = it.getColor(R.styleable.Chameleon_errorButtonTextColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                errorButtonTextSize = it.getDimension(R.styleable.Chameleon_errorButtonTextSize, context.resources.getDimension(R.dimen.title_text_size)),
-                                errorButtonBackgroundColor = it.getColor(R.styleable.Chameleon_errorButtonBackgroundColor, ContextCompat.getColor(context, R.color.colorTitleText)),
-                                useErrorButton = it.getBoolean(R.styleable.Chameleon_useErrorButton, false),
-                                progressDrawable = it.getDrawable(R.styleable.Chameleon_progressDrawable),
-                                useProgressBackground = it.getBoolean(R.styleable.Chameleon_useProgressBackground, false),
-                                progressBackgroundColor = it.getColor(R.styleable.Chameleon_progressBackgroundColor, ContextCompat.getColor(context, R.color.colorLoadingBackground)),
-                                isShowProgressWhenContentState = it.getBoolean(R.styleable.Chameleon_isShowContentWhenLoadingState, false),
-                                isLargeProgress = it.getBoolean(R.styleable.Chameleon_isLargeProgress, false),
-                                defaultChameleonState = stateFromInt(it.getInt(R.styleable.Chameleon_defaultChameleonState, -1))
-                        )
+                    ChameleonAttr(
+                        emptyText = it.getString(R.styleable.Chameleon_emptyText) ?: "empty",
+                        emptyTextColor = it.getColor(
+                            R.styleable.Chameleon_emptyTextColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        emptyTextSize = it.getDimension(
+                            R.styleable.Chameleon_emptyTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        emptyTextGravity = it.getInt(R.styleable.Chameleon_emptyTextGravity, 0),
+                        emptySubText = it.getString(R.styleable.Chameleon_emptySubText) ?: "empty content",
+                        emptySubTextColor = it.getColor(
+                            R.styleable.Chameleon_emptySubTextColor,
+                            ContextCompat.getColor(context, R.color.colorSubText)
+                        ),
+                        emptySubTextSize = it.getDimension(
+                            R.styleable.Chameleon_emptySubTextSize,
+                            context.resources.getDimension(R.dimen.sub_text_size)
+                        ),
+                        emptySubTextGravity = it.getInt(R.styleable.Chameleon_emptySubTextGravity, 0),
+                        emptyDrawable = it.getResourceId(
+                            R.styleable.Chameleon_emptyDrawable,
+                            R.drawable.ic_chameleon_empty
+                        ).getDrawable(context),
+                        emptyButtonText = it.getString(R.styleable.Chameleon_emptyButtonText) ?: "retry",
+                        emptyButtonTextColor = it.getColor(
+                            R.styleable.Chameleon_emptyButtonTextColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        emptyButtonTextSize = it.getDimension(
+                            R.styleable.Chameleon_emptyButtonTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        emptyButtonBackgroundColor = it.getColor(
+                            R.styleable.Chameleon_emptyButtonBackgroundColor,
+                            ContextCompat.getColor(context, R.color.colorSubText)
+                        ),
+                        useEmptyButton = it.getBoolean(R.styleable.Chameleon_useEmptyButton, false),
+                        displayNoneState = it.getBoolean(R.styleable.Chameleon_displayNoneState, false),
+                        noneText = it.getString(R.styleable.Chameleon_noneText) ?: "",
+                        noneTextColor = it.getColor(
+                            R.styleable.Chameleon_noneText,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        noneTextSize = it.getDimension(
+                            R.styleable.Chameleon_noneTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        noneTextGravity = it.getInt(R.styleable.Chameleon_noneTextGravity, 0),
+                        noneSubText = it.getString(R.styleable.Chameleon_noneSubText) ?: "",
+                        noneSubTextColor = it.getColor(
+                            R.styleable.Chameleon_noneSubTextColor,
+                            ContextCompat.getColor(context, R.color.colorSubText)
+                        ),
+                        noneSubTextSize = it.getDimension(
+                            R.styleable.Chameleon_noneSubTextSize,
+                            context.resources.getDimension(R.dimen.sub_text_size)
+                        ),
+                        noneSubTextGravity = it.getInt(R.styleable.Chameleon_noneSubTextGravity, 0),
+                        noneDrawable = it.getResourceId(
+                            R.styleable.Chameleon_noneDrawable,
+                            R.drawable.ic_chameleon_empty
+                        ).getDrawable(context),
+                        noneButtonText = it.getString(R.styleable.Chameleon_noneButtonText) ?: "retry",
+                        noneButtonTextColor = it.getColor(
+                            R.styleable.Chameleon_noneButtonTextColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        noneButtonTextSize = it.getDimension(
+                            R.styleable.Chameleon_noneButtonTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        noneButtonBackgroundColor = it.getColor(
+                            R.styleable.Chameleon_noneButtonBackgroundColor,
+                            ContextCompat.getColor(context, R.color.colorSubText)
+                        ),
+                        useNoneButton = it.getBoolean(R.styleable.Chameleon_useEmptyButton, false),
+                        errorText = it.getString(R.styleable.Chameleon_errorText) ?: "error",
+                        errorTextColor = it.getColor(
+                            R.styleable.Chameleon_errorTextColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        errorTextSize = it.getDimension(
+                            R.styleable.Chameleon_errorTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        errorTextGravity = it.getInt(R.styleable.Chameleon_errorTextGravity, 0),
+                        errorSubText = it.getString(R.styleable.Chameleon_errorSubText) ?: "error content",
+                        errorSubTextColor = it.getColor(
+                            R.styleable.Chameleon_errorSubTextColor,
+                            ContextCompat.getColor(context, R.color.colorSubText)
+                        ),
+                        errorSubTextSize = it.getDimension(
+                            R.styleable.Chameleon_errorSubTextSize,
+                            context.resources.getDimension(R.dimen.sub_text_size)
+                        ),
+                        errorSubTextGravity = it.getInt(R.styleable.Chameleon_errorSubTextGravity, 0),
+                        errorDrawable = it.getResourceId(
+                            R.styleable.Chameleon_errorDrawable,
+                            R.drawable.ic_chameleon_error
+                        ).getDrawable(context),
+                        errorButtonText = it.getString(R.styleable.Chameleon_errorButtonText) ?: "retry",
+                        errorButtonTextColor = it.getColor(
+                            R.styleable.Chameleon_errorButtonTextColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        errorButtonTextSize = it.getDimension(
+                            R.styleable.Chameleon_errorButtonTextSize,
+                            context.resources.getDimension(R.dimen.title_text_size)
+                        ),
+                        errorButtonBackgroundColor = it.getColor(
+                            R.styleable.Chameleon_errorButtonBackgroundColor,
+                            ContextCompat.getColor(context, R.color.colorTitleText)
+                        ),
+                        useErrorButton = it.getBoolean(R.styleable.Chameleon_useErrorButton, false),
+                        progressDrawable = it.getDrawable(R.styleable.Chameleon_progressDrawable),
+                        useProgressBackground = it.getBoolean(R.styleable.Chameleon_useProgressBackground, false),
+                        progressBackgroundColor = it.getColor(
+                            R.styleable.Chameleon_progressBackgroundColor,
+                            ContextCompat.getColor(context, R.color.colorLoadingBackground)
+                        ),
+                        isShowProgressWhenContentState = it.getBoolean(
+                            R.styleable.Chameleon_isShowContentWhenLoadingState,
+                            false
+                        ),
+                        isLargeProgress = it.getBoolean(R.styleable.Chameleon_isLargeProgress, false),
+                        defaultChameleonState = stateFromInt(it.getInt(R.styleable.Chameleon_defaultChameleonState, -1))
+                    )
             }
 
         }
@@ -130,14 +209,12 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
      * @param int - Value from the attribute
      * @return State to set
      */
-    private fun stateFromInt(int: Int): STATE {
-        return when (int) {
-            1 -> STATE.LOADING
-            2 -> STATE.ERROR
-            3 -> STATE.EMPTY
-            4 -> STATE.NONE
-            else -> STATE.CONTENT
-        }
+    private fun stateFromInt(int: Int): STATE = when (int) {
+        1 -> STATE.LOADING
+        2 -> STATE.ERROR
+        3 -> STATE.EMPTY
+        4 -> STATE.NONE
+        else -> STATE.CONTENT
     }
 
     override fun addView(child: View?) {
@@ -170,34 +247,32 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
 
             showState(it.defaultChameleonState)
         }
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(this)
 
-        constraintSet.connect(R.id.iv_state, TOP, PARENT_ID, TOP)
-        constraintSet.connect(R.id.iv_state, START, PARENT_ID, START)
-        constraintSet.connect(R.id.iv_state, BOTTOM, R.id.tv_title_state, TOP, 4.DP(context).toInt())
-        constraintSet.connect(R.id.iv_state, END, PARENT_ID, END)
-        constraintSet.setVerticalBias(R.id.iv_state, 1f)
+        ConstraintSet().apply {
+            clone(this@Chameleon)
+            connect(R.id.iv_state, TOP, PARENT_ID, TOP)
+            connect(R.id.iv_state, START, PARENT_ID, START)
+            connect(R.id.iv_state, BOTTOM, R.id.tv_title_state, TOP, 4.DP(context).toInt())
+            connect(R.id.iv_state, END, PARENT_ID, END)
+            setVerticalBias(R.id.iv_state, 1f)
 
-        constraintSet.connect(R.id.tv_title_state, TOP, PARENT_ID, TOP)
-        constraintSet.connect(R.id.tv_title_state, START, PARENT_ID, START)
-        constraintSet.connect(R.id.tv_title_state, BOTTOM, PARENT_ID, BOTTOM)
-        constraintSet.connect(R.id.tv_title_state, END, PARENT_ID, END)
+            connect(R.id.tv_title_state, TOP, PARENT_ID, TOP)
+            connect(R.id.tv_title_state, START, PARENT_ID, START)
+            connect(R.id.tv_title_state, BOTTOM, PARENT_ID, BOTTOM)
+            connect(R.id.tv_title_state, END, PARENT_ID, END)
 
-        constraintSet.connect(R.id.tv_sub_state, TOP, R.id.tv_title_state, BOTTOM, 4.DP(context).toInt())
-        constraintSet.connect(R.id.tv_sub_state, START, PARENT_ID, START)
-        constraintSet.connect(R.id.tv_sub_state, END, PARENT_ID, END)
+            connect(R.id.tv_sub_state, TOP, R.id.tv_title_state, BOTTOM, 4.DP(context).toInt())
+            connect(R.id.tv_sub_state, START, PARENT_ID, START)
+            connect(R.id.tv_sub_state, END, PARENT_ID, END)
 
-        constraintSet.connect(R.id.bt_state, TOP, R.id.tv_sub_state, BOTTOM, 16.DP(context).toInt())
-        constraintSet.connect(R.id.bt_state, START, PARENT_ID, START)
-        constraintSet.connect(R.id.bt_state, BOTTOM, PARENT_ID, BOTTOM)
-        constraintSet.connect(R.id.bt_state, END, PARENT_ID, END)
-        constraintSet.setVerticalBias(R.id.bt_state, 0f)
-
-        constraintSet.applyTo(this)
-
+            connect(R.id.bt_state, TOP, R.id.tv_sub_state, BOTTOM, 16.DP(context).toInt())
+            connect(R.id.bt_state, START, PARENT_ID, START)
+            connect(R.id.bt_state, BOTTOM, PARENT_ID, BOTTOM)
+            connect(R.id.bt_state, END, PARENT_ID, END)
+            setVerticalBias(R.id.bt_state, 0f)
+            applyTo(this@Chameleon)
+        }
     }
-
 
     private fun checkValid(child: View?) {
         if (childCount > 0) {
@@ -219,8 +294,10 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         if (background is AnimationDrawable) {
             background.start()
         }
-        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
         layoutParams.verticalChainStyle = ConstraintLayout.LayoutParams.CHAIN_PACKED
@@ -236,8 +313,10 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             ellipsize = TextUtils.TruncateAt.END
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
         super.addView(stateTitleTextView, layoutParams)
@@ -252,8 +331,10 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             ellipsize = TextUtils.TruncateAt.END
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
         super.addView(stateSubTextView, layoutParams)
@@ -263,35 +344,29 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         stateProgressLayout = FrameLayout(context)
         stateProgressLayout?.apply {
             id = R.id.pb_state
-            if (attr.useProgressBackground)
-                setBackgroundColor(attr.progressBackgroundColor)
-//            setBackgroundColor(Color.TRANSPARENT)
+            if (attr.useProgressBackground) setBackgroundColor(attr.progressBackgroundColor)
             visibility = View.GONE
         }
         val stateProgressBar =
-                if (attr.isLargeProgress)
-                    ProgressBar(context,
-                            null,
-                            android.R.attr.progressBarStyleLarge)
-                else
-                    ProgressBar(context)
+            if (attr.isLargeProgress)
+                ProgressBar(context, null, android.R.attr.progressBarStyleLarge)
+            else ProgressBar(context)
 
-        stateProgressBar.apply {
-            //            id = R.id.pb_state
-            chameleonAttr?.progressDrawable?.let {
-                indeterminateDrawable = it
-            }
-        }
-        val progressBarLayoutParams = FrameLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        chameleonAttr?.progressDrawable?.let { stateProgressBar.indeterminateDrawable = it }
+
+        val progressBarLayoutParams = FrameLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
         progressBarLayoutParams.gravity = CENTER
 
         stateProgressLayout?.addView(stateProgressBar, progressBarLayoutParams)
-        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.MATCH_PARENT)
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_PARENT
+        )
         super.addView(stateProgressLayout, layoutParams)
     }
-
 
     private fun initStateButton(attr: ChameleonAttr) {
         stateButton = AppCompatButton(context)
@@ -306,18 +381,22 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
         layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
         super.addView(stateButton, layoutParams)
     }
 
-    fun showState(state: STATE,
-                  customDrawable: Drawable? = null,
-                  titleTextSettingBundle: TextSettingBundle = TextSettingBundle(),
-                  subTextSettingBundle: TextSettingBundle = TextSettingBundle(),
-                  buttonSettingBundle: ButtonSettingBundle = ButtonSettingBundle()) {
+    fun showState(
+        state: STATE,
+        customDrawable: Drawable? = null,
+        titleTextSettingBundle: TextSettingBundle = TextSettingBundle(),
+        subTextSettingBundle: TextSettingBundle = TextSettingBundle(),
+        buttonSettingBundle: ButtonSettingBundle = ButtonSettingBundle()
+    ) {
         when (state) {
             STATE.CONTENT -> {
                 setViewVisibility(View.VISIBLE)
@@ -325,101 +404,133 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             STATE.ERROR -> {
                 chameleonAttr?.let {
                     val errorDrawable = customDrawable ?: it.errorDrawable
-                    setStateImageView(errorDrawable
-                            ?: R.drawable.ic_chameleon_error.getDrawable(context))
+                    setStateImageView(
+                        errorDrawable
+                            ?: R.drawable.ic_chameleon_error.getDrawable(context)
+                    )
 
-                    setStateTitleTextView(titleTextSettingBundle.text ?: it.errorText,
-                            titleTextSettingBundle.textSize ?: it.errorTextSize,
-                            titleTextSettingBundle.textColor ?: it.errorTextColor,
-                            titleTextSettingBundle.textGravity ?: it.errorTextGravity)
+                    setStateTitleTextView(
+                        titleTextSettingBundle.text ?: it.errorText,
+                        titleTextSettingBundle.textSize ?: it.errorTextSize,
+                        titleTextSettingBundle.textColor ?: it.errorTextColor,
+                        titleTextSettingBundle.textGravity ?: it.errorTextGravity
+                    )
 
-                    setStateSubTextView(subTextSettingBundle.text ?: it.errorSubText,
-                            subTextSettingBundle.textSize ?: it.errorSubTextSize,
-                            subTextSettingBundle.textColor ?: it.errorSubTextColor,
-                            subTextSettingBundle.textGravity ?: it.errorSubTextGravity)
+                    setStateSubTextView(
+                        subTextSettingBundle.text ?: it.errorSubText,
+                        subTextSettingBundle.textSize ?: it.errorSubTextSize,
+                        subTextSettingBundle.textColor ?: it.errorSubTextColor,
+                        subTextSettingBundle.textGravity ?: it.errorSubTextGravity
+                    )
 
                     if (it.useErrorButton)
-                        setStateButton(buttonSettingBundle.text ?: it.errorButtonText,
-                                buttonSettingBundle.textSize ?: it.errorButtonTextSize,
-                                buttonSettingBundle.textColor ?: it.errorButtonTextColor,
-                                buttonSettingBundle.backgroundColor
-                                        ?: it.errorButtonBackgroundColor,
-                                buttonSettingBundle.listener ?: errorButtonListener)
+                        setStateButton(
+                            buttonSettingBundle.text ?: it.errorButtonText,
+                            buttonSettingBundle.textSize ?: it.errorButtonTextSize,
+                            buttonSettingBundle.textColor ?: it.errorButtonTextColor,
+                            buttonSettingBundle.backgroundColor
+                                ?: it.errorButtonBackgroundColor,
+                            buttonSettingBundle.listener ?: errorButtonListener
+                        )
 
-                    setViewVisibility(imageViewVisible = View.VISIBLE,
-                            titleViewVisible = View.VISIBLE,
-                            subViewVisible = View.VISIBLE,
-                            retryViewVisible = if (it.useEmptyButton) View.VISIBLE else View.GONE)
+                    setViewVisibility(
+                        imageViewVisible = View.VISIBLE,
+                        titleViewVisible = View.VISIBLE,
+                        subViewVisible = View.VISIBLE,
+                        retryViewVisible = if (it.useEmptyButton) View.VISIBLE else View.GONE
+                    )
                 }
             }
             STATE.LOADING -> {
                 chameleonAttr?.let {
-                    setViewVisibility(progressViewVisible = View.VISIBLE,
-                            contentViewVisible = if (it.isShowProgressWhenContentState
-                                    && (currentState == STATE.CONTENT))
-                                View.VISIBLE
-                            else
-                                View.GONE)
+                    setViewVisibility(
+                        progressViewVisible = View.VISIBLE,
+                        contentViewVisible =
+                        if (it.isShowProgressWhenContentState && (currentState == STATE.CONTENT))
+                            View.VISIBLE
+                        else
+                            View.GONE
+                    )
                 }
             }
             STATE.EMPTY -> {
                 chameleonAttr?.let {
                     val emptyDrawable = customDrawable ?: it.emptyDrawable
-                    setStateImageView(emptyDrawable
-                            ?: R.drawable.ic_chameleon_empty.getDrawable(context))
+                    setStateImageView(
+                        emptyDrawable
+                            ?: R.drawable.ic_chameleon_empty.getDrawable(context)
+                    )
 
-                    setStateTitleTextView(titleTextSettingBundle.text ?: it.emptyText,
-                            titleTextSettingBundle.textSize ?: it.emptyTextSize,
-                            titleTextSettingBundle.textColor ?: it.emptyTextColor,
-                            titleTextSettingBundle.textGravity ?: it.emptyTextGravity)
+                    setStateTitleTextView(
+                        titleTextSettingBundle.text ?: it.emptyText,
+                        titleTextSettingBundle.textSize ?: it.emptyTextSize,
+                        titleTextSettingBundle.textColor ?: it.emptyTextColor,
+                        titleTextSettingBundle.textGravity ?: it.emptyTextGravity
+                    )
 
-                    setStateSubTextView(subTextSettingBundle.text ?: it.emptySubText,
-                            subTextSettingBundle.textSize ?: it.emptySubTextSize,
-                            subTextSettingBundle.textColor ?: it.emptySubTextColor,
-                            subTextSettingBundle.textGravity ?: it.emptySubTextGravity)
+                    setStateSubTextView(
+                        subTextSettingBundle.text ?: it.emptySubText,
+                        subTextSettingBundle.textSize ?: it.emptySubTextSize,
+                        subTextSettingBundle.textColor ?: it.emptySubTextColor,
+                        subTextSettingBundle.textGravity ?: it.emptySubTextGravity
+                    )
 
                     if (it.useEmptyButton)
-                        setStateButton(buttonSettingBundle.text ?: it.emptyButtonText,
-                                buttonSettingBundle.textSize ?: it.emptyButtonTextSize,
-                                buttonSettingBundle.textColor ?: it.emptyButtonTextColor,
-                                buttonSettingBundle.backgroundColor
-                                        ?: it.emptyButtonBackgroundColor,
-                                buttonSettingBundle.listener ?: emptyButtonListener)
+                        setStateButton(
+                            buttonSettingBundle.text ?: it.emptyButtonText,
+                            buttonSettingBundle.textSize ?: it.emptyButtonTextSize,
+                            buttonSettingBundle.textColor ?: it.emptyButtonTextColor,
+                            buttonSettingBundle.backgroundColor
+                                ?: it.emptyButtonBackgroundColor,
+                            buttonSettingBundle.listener ?: emptyButtonListener
+                        )
 
-                    setViewVisibility(imageViewVisible = View.VISIBLE,
-                            titleViewVisible = View.VISIBLE,
-                            subViewVisible = View.VISIBLE,
-                            retryViewVisible = if (it.useEmptyButton) View.VISIBLE else View.GONE)
+                    setViewVisibility(
+                        imageViewVisible = View.VISIBLE,
+                        titleViewVisible = View.VISIBLE,
+                        subViewVisible = View.VISIBLE,
+                        retryViewVisible = if (it.useEmptyButton) View.VISIBLE else View.GONE
+                    )
                 }
             }
             STATE.NONE -> if (chameleonAttr?.displayNoneState == true) {
                 val attr = chameleonAttr!!
                 val noneDrawable = customDrawable ?: attr.noneDrawable
-                setStateImageView(noneDrawable
-                    ?: R.drawable.ic_chameleon_empty.getDrawable(context))
+                setStateImageView(
+                    noneDrawable
+                        ?: R.drawable.ic_chameleon_empty.getDrawable(context)
+                )
 
-                setStateTitleTextView(titleTextSettingBundle.text ?: attr.noneText,
+                setStateTitleTextView(
+                    titleTextSettingBundle.text ?: attr.noneText,
                     titleTextSettingBundle.textSize ?: attr.noneTextSize,
                     titleTextSettingBundle.textColor ?: attr.noneTextColor,
-                    titleTextSettingBundle.textGravity ?: attr.noneTextGravity)
+                    titleTextSettingBundle.textGravity ?: attr.noneTextGravity
+                )
 
-                setStateSubTextView(subTextSettingBundle.text ?: attr.noneSubText,
+                setStateSubTextView(
+                    subTextSettingBundle.text ?: attr.noneSubText,
                     subTextSettingBundle.textSize ?: attr.noneSubTextSize,
                     subTextSettingBundle.textColor ?: attr.noneSubTextColor,
-                    subTextSettingBundle.textGravity ?: attr.noneSubTextGravity)
+                    subTextSettingBundle.textGravity ?: attr.noneSubTextGravity
+                )
 
                 if (attr.useNoneButton) {
-                    setStateButton(buttonSettingBundle.text ?: attr.noneButtonText,
+                    setStateButton(
+                        buttonSettingBundle.text ?: attr.noneButtonText,
                         buttonSettingBundle.textSize ?: attr.noneButtonTextSize,
                         buttonSettingBundle.textColor ?: attr.noneButtonTextColor,
                         buttonSettingBundle.backgroundColor ?: attr.noneButtonBackgroundColor,
-                        buttonSettingBundle.listener ?: noneButtonListener)
+                        buttonSettingBundle.listener ?: noneButtonListener
+                    )
                 }
 
-                setViewVisibility(imageViewVisible = View.VISIBLE,
+                setViewVisibility(
+                    imageViewVisible = View.VISIBLE,
                     titleViewVisible = View.VISIBLE,
                     subViewVisible = View.VISIBLE,
-                    retryViewVisible = if (attr.useNoneButton) View.VISIBLE else View.GONE)
+                    retryViewVisible = if (attr.useNoneButton) View.VISIBLE else View.GONE
+                )
             } else {
                 setViewVisibility()
             }
@@ -437,12 +548,14 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         return (stateContentView as? RecyclerView)?.adapter?.itemCount == 0
     }
 
-    private fun setViewVisibility(contentViewVisible: Int = View.GONE,
-                                  imageViewVisible: Int = View.GONE,
-                                  titleViewVisible: Int = View.GONE,
-                                  subViewVisible: Int = View.GONE,
-                                  progressViewVisible: Int = View.GONE,
-                                  retryViewVisible: Int = View.GONE) {
+    private fun setViewVisibility(
+        contentViewVisible: Int = View.GONE,
+        imageViewVisible: Int = View.GONE,
+        titleViewVisible: Int = View.GONE,
+        subViewVisible: Int = View.GONE,
+        progressViewVisible: Int = View.GONE,
+        retryViewVisible: Int = View.GONE
+    ) {
         stateContentView?.visibility = contentViewVisible
         stateImageView?.visibility = imageViewVisible
         stateTitleTextView?.visibility = titleViewVisible
@@ -476,11 +589,13 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         }
     }
 
-    private fun setStateButton(content: String,
-                               size: Float,
-                               textColor: Int,
-                               backgroundColor: Int,
-                               listener: ((View) -> Unit)?) {
+    private fun setStateButton(
+        content: String,
+        size: Float,
+        textColor: Int,
+        backgroundColor: Int,
+        listener: ((View) -> Unit)?
+    ) {
         stateButton?.apply {
             text = content
             setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
