@@ -8,10 +8,10 @@ import android.support.v7.content.res.AppCompatResources
 /**
  * Created by seokwon.jeong on 16/11/2017.
  */
-fun Int.getDrawable(context: Context): Drawable? {
+internal fun Int.getDrawable(context: Context): Drawable? {
     return AppCompatResources.getDrawable(context, this)
 }
 
-fun Int.getColor(context: Context): Int {
+internal fun Int.getColor(context: Context): Int {
     return ContextCompat.getColor(context, this)
 }
