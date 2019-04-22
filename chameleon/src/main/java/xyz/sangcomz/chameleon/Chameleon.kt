@@ -47,7 +47,6 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
     private var stateTitleTextView: AppCompatTextView? = null
     private var stateSubTextView: AppCompatTextView? = null
     private var stateProgressLayout: FrameLayout? = null
-    //    private var stateProgressBar: ProgressBar? = null
     private var stateButton: AppCompatButton? = null
     private var errorButtonListener: ((View) -> Unit)? = null
     private var emptyButtonListener: ((View) -> Unit)? = null
@@ -77,6 +76,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_emptyTextSize,
                             context.resources.getDimension(R.dimen.title_text_size)
                         ),
+                        emptyTextStyle = it.getInt(R.styleable.Chameleon_emptyTextStyle, 0),
                         emptyTextGravity = it.getInt(R.styleable.Chameleon_emptyTextGravity, 0),
                         emptySubText = it.getString(R.styleable.Chameleon_emptySubText) ?: "empty content",
                         emptySubTextColor = it.getColor(
@@ -116,6 +116,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_noneTextSize,
                             context.resources.getDimension(R.dimen.title_text_size)
                         ),
+                        noneTextStyle = it.getInt(R.styleable.Chameleon_noneTextStyle, 0),
                         noneTextGravity = it.getInt(R.styleable.Chameleon_noneTextGravity, 0),
                         noneSubText = it.getString(R.styleable.Chameleon_noneSubText) ?: "",
                         noneSubTextColor = it.getColor(
@@ -154,6 +155,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_errorTextSize,
                             context.resources.getDimension(R.dimen.title_text_size)
                         ),
+                        errorTextStyle = it.getInt(R.styleable.Chameleon_errorTextStyle, 0),
                         errorTextGravity = it.getInt(R.styleable.Chameleon_errorTextGravity, 0),
                         errorSubText = it.getString(R.styleable.Chameleon_errorSubText) ?: "error content",
                         errorSubTextColor = it.getColor(
@@ -294,13 +296,11 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         if (background is AnimationDrawable) {
             background.start()
         }
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.verticalChainStyle = ConstraintLayout.LayoutParams.CHAIN_PACKED
+        val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply {
+            startToStart = LayoutParams.PARENT_ID
+            endToEnd = LayoutParams.PARENT_ID
+            verticalChainStyle = LayoutParams.CHAIN_PACKED
+        }
         super.addView(stateImageView, layoutParams)
     }
 
@@ -313,12 +313,12 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             ellipsize = TextUtils.TruncateAt.END
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        val layoutParams = LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         )
-        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.startToStart = LayoutParams.PARENT_ID
+        layoutParams.endToEnd = LayoutParams.PARENT_ID
         super.addView(stateTitleTextView, layoutParams)
     }
 
@@ -331,12 +331,12 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             ellipsize = TextUtils.TruncateAt.END
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        val layoutParams = LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         )
-        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.startToStart = LayoutParams.PARENT_ID
+        layoutParams.endToEnd = LayoutParams.PARENT_ID
         super.addView(stateSubTextView, layoutParams)
     }
 
@@ -355,15 +355,15 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         chameleonAttr?.progressDrawable?.let { stateProgressBar.indeterminateDrawable = it }
 
         val progressBarLayoutParams = FrameLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         )
         progressBarLayoutParams.gravity = CENTER
 
         stateProgressLayout?.addView(stateProgressBar, progressBarLayoutParams)
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.MATCH_PARENT
+        val layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.MATCH_PARENT
         )
         super.addView(stateProgressLayout, layoutParams)
     }
@@ -381,12 +381,12 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             visibility = View.GONE
         }
-        val layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        val layoutParams = LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         )
-        layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-        layoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        layoutParams.startToStart = LayoutParams.PARENT_ID
+        layoutParams.endToEnd = LayoutParams.PARENT_ID
         super.addView(stateButton, layoutParams)
     }
 
@@ -413,7 +413,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         titleTextSettingBundle.text ?: it.errorText,
                         titleTextSettingBundle.textSize ?: it.errorTextSize,
                         titleTextSettingBundle.textColor ?: it.errorTextColor,
-                        titleTextSettingBundle.textGravity ?: it.errorTextGravity
+                        titleTextSettingBundle.textGravity ?: it.errorTextGravity,
+                        titleTextSettingBundle.textStyle ?: it.errorTextStyle
                     )
 
                     setStateSubTextView(
@@ -465,7 +466,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         titleTextSettingBundle.text ?: it.emptyText,
                         titleTextSettingBundle.textSize ?: it.emptyTextSize,
                         titleTextSettingBundle.textColor ?: it.emptyTextColor,
-                        titleTextSettingBundle.textGravity ?: it.emptyTextGravity
+                        titleTextSettingBundle.textGravity ?: it.emptyTextGravity,
+                        titleTextSettingBundle.textStyle ?: it.emptyTextStyle
                     )
 
                     setStateSubTextView(
@@ -480,8 +482,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             buttonSettingBundle.text ?: it.emptyButtonText,
                             buttonSettingBundle.textSize ?: it.emptyButtonTextSize,
                             buttonSettingBundle.textColor ?: it.emptyButtonTextColor,
-                            buttonSettingBundle.backgroundColor
-                                ?: it.emptyButtonBackgroundColor,
+                            buttonSettingBundle.backgroundColor ?: it.emptyButtonBackgroundColor,
                             buttonSettingBundle.listener ?: emptyButtonListener
                         )
 
@@ -505,7 +506,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                     titleTextSettingBundle.text ?: attr.noneText,
                     titleTextSettingBundle.textSize ?: attr.noneTextSize,
                     titleTextSettingBundle.textColor ?: attr.noneTextColor,
-                    titleTextSettingBundle.textGravity ?: attr.noneTextGravity
+                    titleTextSettingBundle.textGravity ?: attr.noneTextGravity,
+                    titleTextSettingBundle.textStyle ?: attr.noneTextStyle
                 )
 
                 setStateSubTextView(
@@ -571,12 +573,19 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         stateImageView?.setImageDrawable(drawable)
     }
 
-    private fun setStateTitleTextView(content: String, size: Float, color: Int, gravity: Int) {
+    private fun setStateTitleTextView(
+        content: String,
+        size: Float,
+        color: Int,
+        gravity: Int,
+        style: Int
+    ) {
         stateTitleTextView?.apply {
             this.gravity = gravity
             text = content
             setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
             setTextColor(color)
+            setTypeface(typeface, style)
         }
     }
 
