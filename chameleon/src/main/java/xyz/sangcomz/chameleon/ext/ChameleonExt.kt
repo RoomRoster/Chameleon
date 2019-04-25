@@ -17,6 +17,17 @@ fun Chameleon.setError(
 
 fun Chameleon.setLoading() = showState(Chameleon.STATE.LOADING)
 
+fun Chameleon.setNone(
+    drawable: Drawable? = null,
+    titleTextSettingBundle: TextSettingBundle = TextSettingBundle(),
+    subTextSettingBundle: TextSettingBundle = TextSettingBundle()
+) = showState(
+    Chameleon.STATE.NONE,
+    drawable,
+    titleTextSettingBundle,
+    subTextSettingBundle
+)
+
 fun Chameleon.setEmpty(
     drawable: Drawable? = null,
     titleTextSettingBundle: TextSettingBundle = TextSettingBundle(),
