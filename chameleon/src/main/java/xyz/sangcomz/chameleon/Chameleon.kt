@@ -109,7 +109,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         displayNoneState = it.getBoolean(R.styleable.Chameleon_displayNoneState, false),
                         noneText = it.getString(R.styleable.Chameleon_noneText) ?: "",
                         noneTextColor = it.getColor(
-                            R.styleable.Chameleon_noneText,
+                            R.styleable.Chameleon_noneTextColor,
                             ContextCompat.getColor(context, R.color.colorTitleText)
                         ),
                         noneTextSize = it.getDimension(
@@ -145,7 +145,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_noneButtonBackgroundColor,
                             ContextCompat.getColor(context, R.color.colorSubText)
                         ),
-                        useNoneButton = it.getBoolean(R.styleable.Chameleon_useEmptyButton, false),
+                        useNoneButton = it.getBoolean(R.styleable.Chameleon_useNoneButton, false),
                         errorText = it.getString(R.styleable.Chameleon_errorText) ?: "error",
                         errorTextColor = it.getColor(
                             R.styleable.Chameleon_errorTextColor,
