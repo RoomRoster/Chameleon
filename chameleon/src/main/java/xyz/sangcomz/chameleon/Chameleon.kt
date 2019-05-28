@@ -604,6 +604,10 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         }
     }
 
+    fun modifyStateButton(block: AppCompatButton.() -> Unit) {
+        stateButton?.apply(block)
+    }
+
     private fun setStateButton(
         content: String,
         size: Float,
