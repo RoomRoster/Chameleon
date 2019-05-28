@@ -5,11 +5,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
-import android.support.constraint.ConstraintSet.BOTTOM
-import android.support.constraint.ConstraintSet.END
-import android.support.constraint.ConstraintSet.PARENT_ID
-import android.support.constraint.ConstraintSet.START
-import android.support.constraint.ConstraintSet.TOP
+import android.support.constraint.ConstraintSet.*
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.support.v7.widget.AppCompatImageView
@@ -67,6 +63,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             a?.let {
                 chameleonAttr =
                     ChameleonAttr(
+                        buttonBackgroundRes = it.getResourceId(R.styleable.Chameleon_buttonBackground, -1),
                         emptyText = it.getString(R.styleable.Chameleon_emptyText) ?: "empty",
                         emptyTextColor = it.getColor(
                             R.styleable.Chameleon_emptyTextColor,
@@ -78,7 +75,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         ),
                         emptyTextStyle = it.getInt(R.styleable.Chameleon_emptyTextStyle, 0),
                         emptyTextGravity = it.getInt(R.styleable.Chameleon_emptyTextGravity, 0),
-                        emptySubText = it.getString(R.styleable.Chameleon_emptySubText) ?: "empty content",
+                        emptySubText = it.getString(R.styleable.Chameleon_emptySubText)
+                            ?: "empty content",
                         emptySubTextColor = it.getColor(
                             R.styleable.Chameleon_emptySubTextColor,
                             ContextCompat.getColor(context, R.color.colorSubText)
@@ -92,7 +90,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_emptyDrawable,
                             R.drawable.ic_chameleon_empty
                         ).getDrawable(context),
-                        emptyButtonText = it.getString(R.styleable.Chameleon_emptyButtonText) ?: "retry",
+                        emptyButtonText = it.getString(R.styleable.Chameleon_emptyButtonText)
+                            ?: "retry",
                         emptyButtonTextColor = it.getColor(
                             R.styleable.Chameleon_emptyButtonTextColor,
                             ContextCompat.getColor(context, R.color.colorTitleText)
@@ -132,7 +131,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_noneDrawable,
                             R.drawable.ic_chameleon_empty
                         ).getDrawable(context),
-                        noneButtonText = it.getString(R.styleable.Chameleon_noneButtonText) ?: "retry",
+                        noneButtonText = it.getString(R.styleable.Chameleon_noneButtonText)
+                            ?: "retry",
                         noneButtonTextColor = it.getColor(
                             R.styleable.Chameleon_noneButtonTextColor,
                             ContextCompat.getColor(context, R.color.colorTitleText)
@@ -157,7 +157,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         ),
                         errorTextStyle = it.getInt(R.styleable.Chameleon_errorTextStyle, 0),
                         errorTextGravity = it.getInt(R.styleable.Chameleon_errorTextGravity, 0),
-                        errorSubText = it.getString(R.styleable.Chameleon_errorSubText) ?: "error content",
+                        errorSubText = it.getString(R.styleable.Chameleon_errorSubText)
+                            ?: "error content",
                         errorSubTextColor = it.getColor(
                             R.styleable.Chameleon_errorSubTextColor,
                             ContextCompat.getColor(context, R.color.colorSubText)
@@ -171,7 +172,8 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             R.styleable.Chameleon_errorDrawable,
                             R.drawable.ic_chameleon_error
                         ).getDrawable(context),
-                        errorButtonText = it.getString(R.styleable.Chameleon_errorButtonText) ?: "retry",
+                        errorButtonText = it.getString(R.styleable.Chameleon_errorButtonText)
+                            ?: "retry",
                         errorButtonTextColor = it.getColor(
                             R.styleable.Chameleon_errorButtonTextColor,
                             ContextCompat.getColor(context, R.color.colorTitleText)
@@ -431,6 +433,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             buttonSettingBundle.textColor ?: it.errorButtonTextColor,
                             buttonSettingBundle.backgroundColor
                                 ?: it.errorButtonBackgroundColor,
+                            buttonSettingBundle.backgroundRes ?: it.buttonBackgroundRes,
                             buttonSettingBundle.listener ?: errorButtonListener
                         )
 
@@ -482,7 +485,9 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                             buttonSettingBundle.text ?: it.emptyButtonText,
                             buttonSettingBundle.textSize ?: it.emptyButtonTextSize,
                             buttonSettingBundle.textColor ?: it.emptyButtonTextColor,
-                            buttonSettingBundle.backgroundColor ?: it.emptyButtonBackgroundColor,
+                            buttonSettingBundle.backgroundColor
+                                ?: it.emptyButtonBackgroundColor,
+                            buttonSettingBundle.backgroundRes ?: it.buttonBackgroundRes,
                             buttonSettingBundle.listener ?: emptyButtonListener
                         )
 
@@ -523,6 +528,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
                         buttonSettingBundle.textSize ?: attr.noneButtonTextSize,
                         buttonSettingBundle.textColor ?: attr.noneButtonTextColor,
                         buttonSettingBundle.backgroundColor ?: attr.noneButtonBackgroundColor,
+                        buttonSettingBundle.backgroundRes ?: attr.buttonBackgroundRes,
                         buttonSettingBundle.listener ?: noneButtonListener
                     )
                 }
@@ -603,6 +609,7 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         size: Float,
         textColor: Int,
         backgroundColor: Int,
+        backgroundRes: Int,
         listener: ((View) -> Unit)?
     ) {
         stateButton?.apply {
@@ -610,6 +617,9 @@ open class Chameleon(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
             setTextColor(textColor)
             setBackgroundColor(backgroundColor)
+            if (backgroundRes > -1) {
+                setBackgroundResource(backgroundRes)
+            }
             setOnClickListener(listener)
         }
     }

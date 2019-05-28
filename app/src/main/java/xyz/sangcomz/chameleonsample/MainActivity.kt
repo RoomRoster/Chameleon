@@ -1,5 +1,7 @@
 package xyz.sangcomz.chameleonsample
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +13,7 @@ import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import xyz.sangcomz.chameleon.Chameleon
+import xyz.sangcomz.chameleon.ext.setEmpty
 import xyz.sangcomz.chameleon.model.ButtonSettingBundle
 import xyz.sangcomz.chameleon.model.TextSettingBundle
 import java.util.concurrent.TimeUnit
@@ -25,25 +28,25 @@ class MainActivity : AppCompatActivity() {
         setChameleonList()
     }
 
+    @SuppressLint("CheckResult")
     private fun setChameleonList() {
         rv_main_list.adapter = ChameleonAdapter()
         rv_main_list.layoutManager = LinearLayoutManager(this)
         rv_main_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         getChameleons()
-                .delay(5000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            (rv_main_list.adapter as? ChameleonAdapter)?.setChameleonList(it)
-                            root.showState(Chameleon.STATE.CONTENT)
-                        },
-                        {
-                            root.showState(Chameleon.STATE.ERROR)
-                        })
+            .delay(5000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    (rv_main_list.adapter as? ChameleonAdapter)?.setChameleonList(it)
+                    root.showState(Chameleon.STATE.CONTENT)
+                },
+                {
+                    root.showState(Chameleon.STATE.ERROR)
+                })
         root.setStateChangeListener { newState, oldState ->
             Toast.makeText(this, "state was $oldState and now is $newState", Toast.LENGTH_LONG).show()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,17 +66,22 @@ class MainActivity : AppCompatActivity() {
                 root.showState(Chameleon.STATE.LOADING)
             }
             R.id.menu_empty -> {
-                root.showState(Chameleon.STATE.EMPTY,
-                        ContextCompat.getDrawable(this, R.drawable.ic_chameleon_red))
+                root.setEmpty(
+                    drawable = ContextCompat.getDrawable(this, R.drawable.ic_chameleon_red),
+                    buttonSettingBundle = ButtonSettingBundle(
+                        textColor = Color.WHITE,
+                        backgroundRes = R.drawable.bg_rounded
+                    )
+                )
             }
             R.id.menu_error -> {
                 root.showState(Chameleon.STATE.ERROR,
-                        ContextCompat.getDrawable(this, R.drawable.ic_chameleon_blue),
-                        TextSettingBundle("Error Bundle Title"),
-                        TextSettingBundle("Error Bundle Content"),
-                        ButtonSettingBundle("Error Bundle Button", listener = {
-                            Toast.makeText(this, "Custom Action", Toast.LENGTH_SHORT).show()
-                        }))
+                    ContextCompat.getDrawable(this, R.drawable.ic_chameleon_blue),
+                    TextSettingBundle("Error Bundle Title"),
+                    TextSettingBundle("Error Bundle Content"),
+                    ButtonSettingBundle("Error Bundle Button", listener = {
+                        Toast.makeText(this, "Custom Action", Toast.LENGTH_SHORT).show()
+                    }))
             }
         }
         return super.onOptionsItemSelected(item)

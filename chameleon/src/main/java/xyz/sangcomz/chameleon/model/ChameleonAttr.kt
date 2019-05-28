@@ -7,6 +7,7 @@ import xyz.sangcomz.chameleon.Chameleon
  * Created by seokwon.jeong on 17/11/2017.
  */
 internal data class ChameleonAttr(
+    var buttonBackgroundRes: Int,
     var emptyText: String,
     var emptyTextColor: Int,
     var emptyTextSize: Float,
